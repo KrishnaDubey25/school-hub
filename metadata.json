@@ -1,0 +1,6 @@
+{
+  "name": "School Resource Hub",
+  "description": "Government School Resource Management, Sharing, Borrowing, Lending, and NGO Donation Coordination Platform",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
