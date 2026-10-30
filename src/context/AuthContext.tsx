@@ -76,8 +76,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     window.addEventListener('school_hub_storage_updated', handleStorageUpdate);
+    window.addEventListener('storage', handleStorageUpdate);
     return () => {
       window.removeEventListener('school_hub_storage_updated', handleStorageUpdate);
+      window.removeEventListener('storage', handleStorageUpdate);
     };
   }, [currentUser?.id]);
 

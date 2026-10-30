@@ -69,8 +69,12 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setStore(getStoredData());
     };
     window.addEventListener('school_hub_storage_updated', handleStorageChange);
+    // The custom event covers updates in this tab; the native event covers
+    // approvals made in another tab on the same origin.
+    window.addEventListener('storage', handleStorageChange);
     return () => {
       window.removeEventListener('school_hub_storage_updated', handleStorageChange);
+      window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
 
