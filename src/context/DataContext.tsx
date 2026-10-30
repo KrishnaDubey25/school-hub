@@ -246,13 +246,25 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateSchool = (id: string, partial: Partial<SchoolProfile>) => {
+    const school = store.schools.find((s) => s.id === id);
     const next = {
       ...store,
       schools: store.schools.map((s) => (s.id === id ? { ...s, ...partial } : s)),
+      users: partial.verificationStatus
+        ? store.users.map((user) =>
+            user.schoolId === id ? { ...user, status: partial.verificationStatus! } : user
+          )
+        : store.users,
     };
     saveStoredData(next);
     setStore(next);
-    showToast('School Updated', 'School record updated.', 'success');
+    showToast(
+      partial.verificationStatus === 'approved' ? 'School Approved' : 'School Updated',
+      partial.verificationStatus === 'approved'
+        ? `${school?.schoolName || 'School'} can now sign in to the school portal.`
+        : 'School record updated.',
+      'success'
+    );
   };
 
   const deleteSchool = (id: string) => {
@@ -294,13 +306,25 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateNGO = (id: string, partial: Partial<NGOProfile>) => {
+    const ngo = store.ngos.find((n) => n.id === id);
     const next = {
       ...store,
       ngos: store.ngos.map((n) => (n.id === id ? { ...n, ...partial } : n)),
+      users: partial.verificationStatus
+        ? store.users.map((user) =>
+            user.ngoId === id ? { ...user, status: partial.verificationStatus! } : user
+          )
+        : store.users,
     };
     saveStoredData(next);
     setStore(next);
-    showToast('NGO Updated', 'NGO details updated.', 'success');
+    showToast(
+      partial.verificationStatus === 'approved' ? 'NGO Approved' : 'NGO Updated',
+      partial.verificationStatus === 'approved'
+        ? `${ngo?.ngoName || 'NGO'} can now sign in to the NGO portal.`
+        : 'NGO details updated.',
+      'success'
+    );
   };
 
   const deleteNGO = (id: string) => {
